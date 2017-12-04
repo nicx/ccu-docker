@@ -1,0 +1,26 @@
+#! /bin/bash
+### BEGIN INIT INFO
+# Provides: rfd
+# Required-Start: $network
+# Required-Stop: $network
+# Default-Start: 2 3 5
+# Default-Stop: 0 1 6
+# Description: homematic ccu
+### END INIT INFO
+touch /var/lock/ccu
+
+case "$1" in
+  'start')
+        /opt/start.sh
+    ;;
+  'stop')
+        echo "Stopping script ccu"
+    ;;
+  *)
+        echo "Usage: /etc/init.d/ccu {start|stop}"
+        exit 1
+    ;;
+esac
+exit 0
+
+
