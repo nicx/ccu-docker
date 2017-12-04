@@ -125,7 +125,7 @@ RUN sed -i "s|mount -o remount,rw /usr/local||g" /www/config/cp_security.cgi
 USER root
 
 ADD image/start.sh /opt/start.sh
-chmod 777 /opt/start.sh
+RUN chmod 777 /opt/start.sh
 
 ADD image/ccu /etc/init.d/ccu
 RUN chmod 777 /etc/init.d/ccu
