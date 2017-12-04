@@ -87,10 +87,50 @@ RUN touch /var/status/hasInternet
 RUN touch /var/status/hasNTP
 RUN touch /var/status/HMServerStarted
 
+RUN echo "BidCoS-Address=0x123456" >> /var/ids
+RUN echo "SerialNumber=KEQ0111111" >> /var/ids
+
+RUN echo "LOGHOST=/var/log/" >> /etc/config/syslog
+RUN echo "LOGLEVEL_RFD=1" >> /etc/config/syslog
+RUN echo "LOGLEVEL_HS485D=1" >> /etc/config/syslog
+RUN echo "LOGLEVEL_REGA=0" >> /etc/config/syslog
+
+RUN echo "VERSION=2.29.22" >> /boot/VERSION
+
+RUN echo "CP_DEVCONFIG=1" >> /opt/hm/etc/config/tweaks
+
+RUN sed -i "s|8183|8181|g" /etc/config/rega.conf
+RUN sed -i "s|8183|8181|g" /etc/lighttpd/conf.d/proxy.conf
+
+RUN sed -i "s|[Interface 0]|#[Interface 0]|g" /etc/config/rfd.conf
+RUN sed -i "s|Type = CCU2]|#Type = CCU2|g" /etc/config/rfd.conf
+RUN sed -i "s|ComPortFile = /dev/ttyAPP0|#ComPortFile = /dev/ttyAPP0|g" /etc/config/rfd.conf
+RUN sed -i "s|AccessFile = /dev/null|#AccessFile = /dev/null|g" /etc/config/rfd.conf
+RUN sed -i "s|ResetFile = /dev/ccu2-ic200|#ResetFile = /dev/ccu2-ic200|g" /etc/config/rfd.conf
+
+RUN rm /usr/local/etc/config/config
+
+RUN sed -i "s|set iso8601_date [exec date -Iseconds]|set iso8601_date [exec date +%Y-%m-%dT%H:%M:%S%z]|g" /www/config/cp_security.cgi
+RUN sed -i "s|exec tar czf /tmp/usr_local.tar.gz usr/local|exec tar czfh /tmp/usr_local.tar.gz usr/local|g" /www/config/cp_security.cgi
+RUN sed -i "s|[catch {exec tar xzf /tmp/usr_local.tar.gz} errorMessage]|if { [catch {exec tar xzfh /tmp/usr_local.tar.gz} errorMessage]|g" /www/config/cp_security.cgi
+RUN sed -i "s|exec umount /usr/local||g" /www/config/cp_security.cgi
+RUN sed -i "s|/usr/sbin/ubidetach -p /dev/mtd6||g" /www/config/cp_security.cgi
+RUN sed -i "s|/usr/sbin/ubiformat /dev/mtd6 -y||g" /www/config/cp_security.cgi
+RUN sed -i "s|/usr/sbin/ubiattach -p /dev/mtd6||g" /www/config/cp_security.cgi
+RUN sed -i "s|/usr/sbin/ubimkvol /dev/ubi1 -N user -m||g" /www/config/cp_security.cgi
+RUN sed -i "s|mount /usr/local||g" /www/config/cp_security.cgi
+RUN sed -i "s|mount -o remount,ro /usr/local||g" /www/config/cp_security.cgi
+RUN sed -i "s|mount -o remount,rw /usr/local||g" /www/config/cp_security.cgi
+
 USER root
 
-ADD image/start.sh /root/start.sh
+ADD image/start.sh /opt/start.sh
+chmod 777 /opt/start.sh
+
+ADD image/ccu /etc/init.d/ccu
+RUN chmod 777 /etc/init.d/ccu
+RUN systemctl enable ccu
 
 # Run container
-EXPOSE 8083
-CMD ["/root/start.sh"]
+EXPOSE 8081
+CMD ["/opt/start.sh"]
