@@ -2,7 +2,6 @@ FROM debian:stretch
 
 MAINTAINER timokli
 
-
 RUN dpkg --add-architecture i386
 RUN apt-get update
 RUN apt-get -y dist-upgrade
@@ -11,6 +10,9 @@ RUN apt-get -y install dirmngr lighttpd git libc6-i386 lib32stdc++6 lib32gcc1 li
 RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu zesty main" | tee /etc/apt/sources.list.d/webupd8team-java.list
 RUN echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu zesty main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
+
+RUN debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
+RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
 
 RUN apt-get -y update
 RUN apt-get -y install oracle-java9-installer
