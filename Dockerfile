@@ -134,5 +134,5 @@ RUN chmod 777 /etc/init.d/ccu
 RUN systemctl enable ccu
 
 # Run container
-EXPOSE 8081
+EXPOSE 8181
 CMD ["/opt/start.sh"]
