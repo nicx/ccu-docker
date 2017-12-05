@@ -40,7 +40,7 @@ RUN rm /etc/lighttpd/* -R
 RUN cp /opt/occu-git/HMserver/opt/HMServer/HMIPServer.jar /opt/HMServer/
 RUN cp /opt/occu-git/HMserver/opt/HMServer/HMServer.jar /opt/HMServer/
 RUN cp /opt/occu-git/WebUI/bin/* -R /bin/
-RUN cp /opt/occu-git/WebUI/www/* -R /www/
+RUN cp /opt/occu-git/WebUI/www/* -R /www/; exit 0
 RUN cp /opt/occu-git/firmware/* -R /firmware/
 RUN cp /opt/occu-git/X86_32_Debian_Wheezy/packages-eQ-3/HS485D/bin/* -R /bin/
 RUN cp /opt/occu-git/X86_32_Debian_Wheezy/packages-eQ-3/HS485D/lib/* -R /lib/
