@@ -104,7 +104,7 @@ RUN echo "CP_DEVCONFIG=1" >> /opt/hm/etc/config/tweaks
 RUN sed -i "s|8183|8181|g" /etc/config/rega.conf
 RUN sed -i "s|8183|8181|g" /etc/lighttpd/conf.d/proxy.conf
 
-RUN sed -i "s|'[Interface 0]'|'#[Interface 0]'|g" /etc/config/rfd.conf
+RUN sed -i "s|\[Interface 0\]|#\[Interface 0\]|g" /etc/config/rfd.conf
 RUN sed -i "s|Type = CCU2]|#Type = CCU2|g" /etc/config/rfd.conf
 RUN sed -i "s|ComPortFile = /dev/ttyAPP0|#ComPortFile = /dev/ttyAPP0|g" /etc/config/rfd.conf
 RUN sed -i "s|AccessFile = /dev/null|#AccessFile = /dev/null|g" /etc/config/rfd.conf
@@ -112,9 +112,9 @@ RUN sed -i "s|ResetFile = /dev/ccu2-ic200|#ResetFile = /dev/ccu2-ic200|g" /etc/c
 
 RUN rm /usr/local/etc/config/config
 
-RUN sed -i "s|set iso8601_date [exec date -Iseconds]|set iso8601_date [exec date +%Y-%m-%dT%H:%M:%S%z]|g" /www/config/cp_security.cgi
-RUN sed -i "s|exec tar czf /tmp/usr_local.tar.gz usr/local|exec tar czfh /tmp/usr_local.tar.gz usr/local|g" /www/config/cp_security.cgi
-RUN sed -i "s|[catch {exec tar xzf /tmp/usr_local.tar.gz} errorMessage]|if { [catch {exec tar xzfh /tmp/usr_local.tar.gz} errorMessage]|g" /www/config/cp_security.cgi
+RUN sed -i "s|set iso8601_date \[exec date -Iseconds\]|set iso8601_date \[exec date +%Y-%m-%dT%H:%M:%S%z\]|g" /www/config/cp_security.cgi
+RUN sed -i "s|exec tar czf /tmp/usr_local.tar.gz|exec tar czfh /tmp/usr_local.tar.gz|g" /www/config/cp_security.cgi
+RUN sed -i "s|exec tar xzf /tmp/usr_local.tar.gz|exec tar xzfh /tmp/usr_local.tar.gz|g" /www/config/cp_security.cgi
 RUN sed -i "s|exec umount /usr/local||g" /www/config/cp_security.cgi
 RUN sed -i "s|/usr/sbin/ubidetach -p /dev/mtd6||g" /www/config/cp_security.cgi
 RUN sed -i "s|/usr/sbin/ubiformat /dev/mtd6 -y||g" /www/config/cp_security.cgi
