@@ -5,7 +5,7 @@ MAINTAINER timokli
 RUN dpkg --add-architecture i386
 RUN apt-get update
 RUN apt-get -y dist-upgrade
-RUN apt-get -y install dirmngr lighttpd git libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 libusb-1.0.0:i386 tcl curl psmisc socat
+RUN apt-get -y install dirmngr lighttpd git libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 libusb-1.0.0:i386 tcl curl psmisc socat systemd
 
 RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu zesty main" | tee /etc/apt/sources.list.d/webupd8team-java.list
 RUN echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu zesty main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list
@@ -131,7 +131,7 @@ RUN chmod 777 /opt/start.sh
 
 ADD image/ccu /etc/init.d/ccu
 RUN chmod 777 /etc/init.d/ccu
-#RUN systemctl enable ccu
+RUN systemctl enable ccu
 
 # Run container
 EXPOSE 8081
