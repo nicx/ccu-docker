@@ -104,7 +104,7 @@ RUN echo "CP_DEVCONFIG=1" >> /opt/hm/etc/config/tweaks
 RUN sed -i "s|8183|8181|g" /etc/config/rega.conf
 RUN sed -i "s|8183|8181|g" /etc/lighttpd/conf.d/proxy.conf
 
-RUN sed -i "s|[Interface 0]|#[Interface 0]|g" /etc/config/rfd.conf
+RUN sed -i "s|'[Interface 0]'|'#[Interface 0]'|g" /etc/config/rfd.conf
 RUN sed -i "s|Type = CCU2]|#Type = CCU2|g" /etc/config/rfd.conf
 RUN sed -i "s|ComPortFile = /dev/ttyAPP0|#ComPortFile = /dev/ttyAPP0|g" /etc/config/rfd.conf
 RUN sed -i "s|AccessFile = /dev/null|#AccessFile = /dev/null|g" /etc/config/rfd.conf
