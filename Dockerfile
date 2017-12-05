@@ -131,7 +131,7 @@ RUN chmod 777 /opt/start.sh
 
 ADD image/ccu /etc/init.d/ccu
 RUN chmod 777 /etc/init.d/ccu
-RUN systemctl enable ccu
+#RUN systemctl enable ccu
 
 # Run container
 EXPOSE 8081
