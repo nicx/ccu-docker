@@ -1,1 +1,1 @@
-# ccu2-docker
+# ccu-docker
