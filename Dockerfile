@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM minimum2scp/systemd-stretch
 
 MAINTAINER nicx
 
@@ -8,10 +8,11 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV TERM xterm
 
 # Install dependencies and tools
+RUN git config --global user.email "docker@nicx.de" && git config --global user.name "nicx"
 RUN apt-get update
 RUN apt-get -y dist-upgrade
 RUN apt-get -y install apt-utils apt-transport-https
-RUN apt-get -y install curl wget gnupg2 systemd udev
+RUN apt-get -y install curl wget gnupg2 udev
 RUN apt-get -y install nano vim
 
 RUN wget -q -O - https://www.debmatic.de/debmatic/public.key | apt-key add -
@@ -24,7 +25,7 @@ RUN apt-get -y install pivccu-modules-dkms
 #RUN reboot
 
 # Install latest Debmatic
-RUN apt-get -y install debmatic
+#RUN apt-get -y install debmatic
 
 # Run container
 USER root
